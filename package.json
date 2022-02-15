@@ -1,0 +1,24 @@
+{
+  "name": "mock-service",
+  "version": "1.0.0",
+  "description": "本地化的Mock服务",
+  "main": "bin/www",
+  "scripts": {
+    "start": "cross-env HOSTNAME=localhost PORT=9000 nodemon ./bin/www"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@koa/router": "^10.1.1",
+    "chalk": "2.4.2",
+    "koa": "^2.13.4",
+    "koa-logger": "^3.2.1",
+    "mockjs": "^1.1.0",
+    "moment": "^2.29.1",
+    "nodemon": "^2.0.15"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}
