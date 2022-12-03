@@ -270,4 +270,25 @@ module.exports = [
       };
     },
   },
+  {
+    name: '平安普惠-人工代扣-还款金额明细试算',
+    path: '/interface',
+    context: async (ctx) => {
+      const mockData = $Mock({
+        'list|30-100': [{
+          'id': 'LN@natural(10000000, 99999999)',
+          'name': '@cname',
+          'certificateNo': /(^\d{15}$)|(^\d{17}(\d|X|x)$)/
+        }]
+      });
+      mockData.total = mockData.list.length;
+      mockData.statusCode = '00';
+
+      ctx.body = {
+        data: mockData,
+        httpStatus: 200,
+        responseType: 'HSJRY_SUCCESS',
+      };
+    },
+  },
 ];

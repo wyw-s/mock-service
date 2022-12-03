@@ -1,47 +1,35 @@
 <template>
-    <el-table :data="tableData" style="width: 100%">
+    <el-table :data="interfaceList" max-height="500">
+        <el-table-column prop="id" label="id" width="180" />
         <el-table-column prop="date" label="Date" width="180" />
         <el-table-column prop="name" label="Name" width="180" />
         <el-table-column prop="address" label="Address" />
     </el-table>
 </template>
 
-<script lang="ts" setup>
-const tableData = [
-    {
-        date: '2016-05-03',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
+<script>
+import { getInterface } from '../apis';
+
+export default {
+    data() {
+        return {
+            interfaceList: [{
+                date: '2016-05-03',
+                name: 'Tom',
+                address: 'No. 189, Grove St, Los Angeles',
+            },]
+        }
     },
-    {
-        date: '2016-05-02',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
+    mounted() {
+        this.getInterfaceList();
     },
-    {
-        date: '2016-05-04',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-    {
-        date: '2016-05-01',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-    {
-        date: '2016-05-08',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-    {
-        date: '2016-05-06',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-    {
-        date: '2016-05-07',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-]
+
+    methods: {
+        getInterfaceList() {
+            getInterface().then((res) => {
+                this.interfaceList = res.data.list;
+            })
+        }
+    }
+}
 </script>

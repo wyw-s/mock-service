@@ -31,6 +31,7 @@ import Header from './Header.vue';
     background: #ffffff;
 
     .el-header {
+        z-index: 10;
         height: 45px;
         box-shadow: 0px 4px 8px 0px #e1e4e3;
     }
