@@ -4,26 +4,26 @@ import Header from './Header.vue';
 </script>
 
 <template>
-    <div class="common-layout">
-        <el-container>
-            <el-aside width="200px">
-                <SiderBar />
-            </el-aside>
-            <el-container>
-                <el-header>
-                    <Header />
-                </el-header>
-                <el-container class="layout-warpper">
-                    <el-main>
-                        <el-card>
-                            <router-view />
-                        </el-card>
-                    </el-main>
-                    <!--<el-footer>Footer</el-footer>-->
-                </el-container>
-            </el-container>
+  <div class="common-layout">
+    <el-container>
+      <el-aside width="200px">
+        <SiderBar />
+      </el-aside>
+      <el-container>
+        <el-header>
+          <Header />
+        </el-header>
+        <el-container class="layout-warpper">
+          <el-main>
+            <el-card>
+              <router-view />
+            </el-card>
+          </el-main>
+          <!--<el-footer>Footer</el-footer>-->
         </el-container>
-    </div>
+      </el-container>
+    </el-container>
+  </div>
 </template>
 
 <style scoped lang="less">
