@@ -37,6 +37,9 @@
           placeholder="Please input"
         />
       </el-form-item>
+        <el-form-item label="响应体">
+            <CodeMirror />
+        </el-form-item>
       <el-form-item>
         <el-button
           type="primary"
@@ -50,8 +53,13 @@
 </template>
 
 <script>
+import CodeMirror from '../../components/CodeMirror.vue';
+
 export default {
   name: 'InterfaceName',
+    components: {
+      CodeMirror
+    },
   data() {
     return {
       form: {}
