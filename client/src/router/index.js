@@ -8,7 +8,12 @@ const routes = [
   {
     path: '/interface',
     name: '接口列表',
-    component: () => import('../pages/Interface.vue')
+    component: () => import('../pages/Interface/index.vue')
+  },
+  {
+    path: '/interface/add',
+    name: '新增接口',
+    component: () => import('../pages/Interface/add.vue')
   },
   { path: '/about', component: () => import('../components/TheWelcome.vue') },
 ]

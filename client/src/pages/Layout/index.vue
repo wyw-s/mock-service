@@ -1,7 +1,6 @@
 <script setup>
 import SiderBar from './SiderBar.vue';
 import Header from './Header.vue';
-
 </script>
 
 <template>
@@ -16,7 +15,9 @@ import Header from './Header.vue';
                 </el-header>
                 <el-container class="layout-warpper">
                     <el-main>
-                        <router-view />
+                        <el-card>
+                            <router-view />
+                        </el-card>
                     </el-main>
                     <!--<el-footer>Footer</el-footer>-->
                 </el-container>
@@ -26,19 +27,32 @@ import Header from './Header.vue';
 </template>
 
 <style scoped lang="less">
+@import "../../assets/variable";
+
 .common-layout {
     height: 100%;
-    background: #ffffff;
+    background: @neutral-1;
 
     .el-header {
         z-index: 10;
         height: 45px;
-        box-shadow: 0px 4px 8px 0px #e1e4e3;
+        box-shadow: 0px 4px 8px 0px @neutral-5;
     }
 
     .layout-warpper {
         height: calc(100vh - 46px);
         overflow: auto;
+
+        .el-main {
+            padding: 14px;
+            background: @neutral-2;
+        }
+    }
+
+    :deep {
+        .el-card__body {
+            padding: 14px;
+        }
     }
 }
 </style>
