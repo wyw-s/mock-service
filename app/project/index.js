@@ -8,10 +8,12 @@
 const http = require('../utils/http')
 const kylinAfterLoan = require('./kylin-after-loan');
 const kylinGuarantee = require('./kylin-guarantee');
+const common = require('./common');
 
 const allRouter = [
   ...kylinAfterLoan,
-  ...kylinGuarantee
+  ...kylinGuarantee,
+  ...common
 ];
 
 const methods = ['post', 'get'];
