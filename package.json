@@ -19,6 +19,8 @@
     "element-plus": "^2.2.26",
     "koa": "^2.13.4",
     "koa-logger": "^3.2.1",
+    "less": "^4.1.3",
+    "less-loader": "^11.1.0",
     "mockjs": "^1.1.0",
     "moment": "^2.29.1",
     "nodemon": "^2.0.15",
