@@ -5,80 +5,36 @@
       label-width="120px"
       style="margin-top: 16px"
     >
-      <el-form-item label="Activity name">
-        <el-input v-model="form.name" />
-      </el-form-item>
-      <el-form-item label="Activity zone">
-        <el-select
-          v-model="form.region"
-          placeholder="please select your zone"
-        >
-          <el-option
-            label="Zone one"
-            value="shanghai"
-          />
-          <el-option
-            label="Zone two"
-            value="beijing"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="Activity time">
-        <el-col :span="11">
-          <el-date-picker
-            v-model="form.date1"
-            type="date"
-            placeholder="Pick a date"
-            style="width: 100%"
-          />
-        </el-col>
-        <el-col
-          :span="2"
-          class="text-center"
-        >
-          <span class="text-gray-500">-</span>
-        </el-col>
-        <el-col :span="11">
-          <el-time-picker
-            v-model="form.date2"
-            placeholder="Pick a time"
-            style="width: 100%"
-          />
-        </el-col>
-      </el-form-item>
-      <el-form-item label="Instant delivery">
-        <el-switch v-model="form.delivery" />
-      </el-form-item>
-      <el-form-item label="Activity type">
-        <el-checkbox-group v-model="form.type">
-          <el-checkbox
-            label="Online activities"
-            name="type"
-          />
-          <el-checkbox
-            label="Promotion activities"
-            name="type"
-          />
-          <el-checkbox
-            label="Offline activities"
-            name="type"
-          />
-          <el-checkbox
-            label="Simple brand exposure"
-            name="type"
-          />
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="Resources">
-        <el-radio-group v-model="form.resource">
-          <el-radio label="Sponsor" />
-          <el-radio label="Venue" />
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="Activity form">
+      <el-form-item label="接口名称">
         <el-input
-          v-model="form.desc"
+          v-model="form.name"
+          placeholder="请求路径"
+          class="input-with-select"
+        >
+          <template #prepend>
+            <el-select
+              v-model="form.method"
+              placeholder="请求方法"
+              style="width: 115px"
+            >
+              <el-option
+                label="GET"
+                value="GET"
+              />
+              <el-option
+                label="POST"
+                value="POST"
+              />
+            </el-select>
+          </template>
+        </el-input>
+      </el-form-item>
+      <el-form-item label="请求体">
+        <el-input
+          v-model="form.body"
+          :autosize="{ minRows: 2, maxRows: 4 }"
           type="textarea"
+          placeholder="Please input"
         />
       </el-form-item>
       <el-form-item>
@@ -86,9 +42,8 @@
           type="primary"
           @click="onSubmit"
         >
-          Create
+          创建
         </el-button>
-        <el-button>Cancel</el-button>
       </el-form-item>
     </el-form>
   </el-page-header>
