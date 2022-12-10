@@ -1,5 +1,6 @@
 'use strict'
 
+const moment = require('moment');
 const { ProjectProxy } = require('../proxy')
 
 module.exports = class ProjectController {
@@ -9,13 +10,14 @@ module.exports = class ProjectController {
    */
   static async create (ctx) {
     const remark = ctx.request.body.remark
-    const name = ctx.request.body.name
+    const projectName = ctx.request.body.projectName
     const saveQuery = {
-      project_name: name,
-      remark: remark || name
+      project_name: projectName,
+      create_time: moment().format('YYYY-MM-DD HH:ss:mm'),
+      remark: remark || projectName
     }
 
-    const { success, message, results } = await ProjectProxy.findOne(name);
+    const { success, message, results } = await ProjectProxy.findOne(projectName);
 
     if (!success) {
       ctx.body = ctx.util.refail(message);

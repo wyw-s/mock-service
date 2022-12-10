@@ -20,7 +20,17 @@ module.exports = class ProjectProxy {
   }
 
   static find () {
-    return Project('SELECT * FROM project_list ORDER BY Id desc');
+    const sql = `
+      SELECT
+        Id AS id,
+        project_name AS projectName,
+        create_time AS createTime,
+        remark
+      FROM project_list
+      ORDER BY Id desc;
+      `;
+
+    return Project(sql);
   }
 
   static updateById (project) {

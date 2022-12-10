@@ -1,6 +1,7 @@
 'use strict'
 
 const connection = require('../utils/mysql');
+const { errorFn } = require('../utils/util');
 
 const createMockTable = `
 CREATE TABLE IF NOT EXISTS mock_list(
@@ -13,6 +14,6 @@ CREATE TABLE IF NOT EXISTS mock_list(
 )`
 
 // 创建mock表
-connection(createMockTable)
+connection(createMockTable).catch(errorFn);
 
 module.exports = connection;

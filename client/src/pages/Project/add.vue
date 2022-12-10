@@ -7,7 +7,7 @@
     >
       <el-form-item label="项目名称">
         <el-input
-          v-model="form.name"
+          v-model="form.projectName"
           placeholder="项目名称"
           class="input-with-select"
         />
@@ -34,6 +34,7 @@
 <script>
 // import CodeMirror from '../../components/CodeMirror.vue';
 import { createProject } from '../../apis';
+import { ElMessage } from 'element-plus';
 
 export default {
   name: 'CreateProject',
@@ -52,7 +53,13 @@ export default {
     },
     onSubmit() {
       createProject(this.form).then((res) => {
-        console.log(res, 'Yahweh');
+        if (res.success) {
+          ElMessage({
+            message: '创建成功',
+            type: 'success'
+          });
+          this.$router.back();
+        }
       });
     }
   }

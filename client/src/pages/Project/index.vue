@@ -21,21 +21,19 @@
     <el-table-column
       prop="id"
       label="id"
-      width="180"
+      width="80"
     />
     <el-table-column
-      prop="date"
-      label="Date"
-      width="180"
+      prop="projectName"
+      label="项目名称"
     />
     <el-table-column
-      prop="name"
-      label="Name"
-      width="180"
+      prop="createTime"
+      label="创建时间"
     />
     <el-table-column
-      prop="address"
-      label="Address"
+      prop="remark"
+      label="备注"
     />
   </el-table>
 </template>
@@ -47,11 +45,7 @@ export default {
   name: 'ProjectList',
   data() {
     return {
-      interfaceList: [{
-        date: '2016-05-03',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
-      },]
+      interfaceList: []
     }
   },
   mounted() {
