@@ -1,6 +1,6 @@
 'use strict'
 
 module.exports = {
-  // Mock: require('./mock'),
+  Mock: require('./mock'),
   Project: require('./project'),
 }

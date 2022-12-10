@@ -5,11 +5,26 @@
       label-width="120px"
       style="margin-top: 16px"
     >
+      <el-form-item label="项目名称">
+        <el-select v-model="form.projectId" placeholder="项目名称" class="m-2">
+          <el-option
+            v-for="item in projectList"
+            :key="item.id"
+            :label="item.projectName"
+            :value="item.id"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item label="接口名称">
         <el-input
           v-model="form.name"
+          placeholder="接口名称"
+        />
+      </el-form-item>
+      <el-form-item label="接口URL">
+        <el-input
+          v-model="form.url"
           placeholder="请求路径"
-          class="input-with-select"
         >
           <template #prepend>
             <el-select
@@ -54,6 +69,8 @@
 
 <script>
 import CodeMirror from '../../components/CodeMirror.vue';
+import { createInterface, getProjectList } from '../../apis';
+import { ElMessage } from 'element-plus';
 
 export default {
   name: 'InterfaceName',
@@ -62,13 +79,34 @@ export default {
     },
   data() {
     return {
-      form: {}
+      form: {},
+      projectList: []
     }
   },
-
+  mounted() {
+    this.getProjectList();
+  },
   methods: {
     goBack() {
       this.$router.back()
+    },
+    getProjectList() {
+      getProjectList().then((res) => {
+        if (res.success) {
+          this.projectList = res.data
+        }
+      })
+    },
+    onSubmit() {
+      createInterface(this.form).then((res) => {
+        if (res.success) {
+          ElMessage({
+            message: '创建成功',
+            type: 'success'
+          });
+          this.$router.back();
+        }
+      });
     }
   }
 }

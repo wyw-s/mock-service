@@ -24,18 +24,22 @@
       width="180"
     />
     <el-table-column
-      prop="date"
-      label="Date"
-      width="180"
-    />
-    <el-table-column
       prop="name"
-      label="Name"
+      label="接口名称"
       width="180"
     />
     <el-table-column
-      prop="address"
-      label="Address"
+      prop="url"
+      label="URL"
+      width="180"
+    />
+    <el-table-column
+      prop="createTime"
+      label="创建时间"
+    />
+    <el-table-column
+      prop="remark"
+      label="备注"
     />
   </el-table>
 </template>
@@ -47,11 +51,7 @@ export default {
   name: 'InterfaceList',
   data() {
     return {
-      interfaceList: [{
-        date: '2016-05-03',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
-      },]
+      interfaceList: []
     }
   },
   mounted() {
@@ -61,7 +61,7 @@ export default {
   methods: {
     getInterfaceList() {
       getInterface().then((res) => {
-        this.interfaceList = res.data.list;
+        this.interfaceList = res.data;
       })
     },
 

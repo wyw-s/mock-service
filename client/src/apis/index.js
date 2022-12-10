@@ -21,8 +21,17 @@ export function createProject (data) {
 // 获取接口列表
 export function getInterface (data) {
   return http({
-    url: '/interface',
+    url: '/mock',
     method: 'get',
+    data
+  })
+}
+
+// 创建接口
+export function createInterface (data) {
+  return http({
+    url: '/mock/create',
+    method: 'post',
     data
   })
 }
