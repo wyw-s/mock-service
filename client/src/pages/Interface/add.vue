@@ -77,7 +77,7 @@
 
 <script>
 import CodeMirror from '../../components/CodeMirror.vue';
-import { createInterface, getProjectList, getMockDetail } from '../../apis';
+import { createInterface, getProjectList, getMockDetail, updateMock } from '../../apis';
 import { ElMessage } from 'element-plus';
 
 export default {
@@ -88,12 +88,14 @@ export default {
   data() {
     return {
       form: {},
-      projectList: []
+      projectList: [],
+      mockId: ''
     }
   },
   mounted() {
     const { query: { mockId } } = this.$route;
     if (mockId) {
+      this.mockId = mockId;
       this.getMockDetail(mockId);
     }
 
@@ -118,15 +120,27 @@ export default {
       })
     },
     onSubmit() {
-      createInterface(this.form).then((res) => {
-        if (res.success) {
-          ElMessage({
-            message: '创建成功',
-            type: 'success'
-          });
-          this.$router.back();
-        }
-      });
+      if (this.mockId) {
+        updateMock(this.mockId, this.form).then((res) => {
+          if (res.success) {
+            ElMessage({
+              message: '修改成功',
+              type: 'success'
+            });
+            this.$router.back();
+          }
+        })
+      } else {
+        createInterface(this.form).then((res) => {
+          if (res.success) {
+            ElMessage({
+              message: '创建成功',
+              type: 'success'
+            });
+            this.$router.back();
+          }
+        });
+      }
     }
   }
 }

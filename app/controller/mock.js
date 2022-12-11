@@ -66,7 +66,34 @@ module.exports = class MockController {
    */
 
   static async update (ctx) {
-    ctx.body = ctx.util.resuccess()
+    const { mockId } = ctx.params;
+    const { name, url, method, body, response, projectId, remark } = ctx.request.body;
+    const saveQuery = {
+      id: Number(mockId),
+      name,
+      url,
+      method,
+      body,
+      response,
+      projectId,
+      remark
+    }
+
+    const { success, message } = await MockProxy.findOne(url, projectId);
+
+    if (!success) {
+      ctx.body = ctx.util.refail(message);
+      return;
+    }
+
+    const { success: suc } = await MockProxy.updateById(saveQuery)
+
+    if (suc) {
+      ctx.body = ctx.util.resuccess('修改成功');
+      return;
+    }
+
+    ctx.body = ctx.util.refail(`接口 ${name} 修改失败`);
   }
 
   /**

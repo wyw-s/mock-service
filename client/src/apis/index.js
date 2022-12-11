@@ -51,3 +51,12 @@ export function getMockDetail (mockId) {
     method: 'get',
   })
 }
+
+// 更新接口
+export function updateMock (mockId, data) {
+  return http({
+    url: `/api/mock/update/${mockId}`,
+    method: 'post',
+    data
+  })
+}

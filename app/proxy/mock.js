@@ -44,8 +44,20 @@ module.exports = class MockProxy {
     return Mock('select * from mock_list where url = ? AND project_id = ?', [url, projectId]);
   }
 
-  static updateById (mock) {
-    return Mock()
+  static updateById (params = {}) {
+    const { projectId, name, method, url, body, response, remark, id } = params;
+    const sql = `
+      UPDATE mock_list 
+        SET project_id = ?, 
+        name = ?, 
+        method = ?, 
+        url = ?, 
+        body = ?, 
+        response = ?, 
+        remark = ? 
+      WHERE Id = ?`;
+
+    return Mock(sql, [projectId, name, method, url, body, response, remark, id]);
   }
 
   static delByIds (mockIds) {
