@@ -113,9 +113,7 @@ export default {
         envUrl: `${window.location.origin}/8mock/${row.projectId}`
       };
       http.get(`/8mock/${row.projectId}${row.url}`).then(res => {
-        if (res.success) {
-          this.code = JSON.stringify(res.data, null, 2);
-        }
+        this.code = JSON.stringify(res, null, 2);
       })
     },
 

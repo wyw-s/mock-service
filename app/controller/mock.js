@@ -113,10 +113,10 @@ module.exports = class MockController {
       const response = JSON.parse(results[0].response);
       if (response instanceof Object) {
         const mockData = Mock.mock(response);
-        ctx.body = ctx.util.resuccess(mockData);
+        ctx.body = mockData;
         return;
       }
-      ctx.body = ctx.util.resuccess();
+      ctx.body = null;
       return;
     }
 
