@@ -53,7 +53,7 @@
         />
       </el-form-item>
       <el-form-item label="响应体">
-        <div style="height: 400px">
+        <div style="height: 400px; width: 100%">
           <CodeMirror v-model="form.response" />
         </div>
       </el-form-item>
