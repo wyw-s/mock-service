@@ -6,7 +6,7 @@
       style="margin-top: 16px"
     >
       <el-form-item label="项目名称">
-        <el-select v-model="form.projectId" placeholder="项目名称" class="m-2">
+        <el-select v-model="form.projectId" placeholder="项目名称">
           <el-option
             v-for="item in projectList"
             :key="item.id"
@@ -52,9 +52,17 @@
           placeholder="Please input"
         />
       </el-form-item>
-        <el-form-item label="响应体">
-            <CodeMirror />
-        </el-form-item>
+      <el-form-item label="响应体">
+        <CodeMirror v-model="form.response" />
+      </el-form-item>
+      <el-form-item label="备注">
+        <el-input
+          v-model="form.remark"
+          :autosize="{ minRows: 2, maxRows: 4 }"
+          type="textarea"
+          placeholder="请输入备注"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button
           type="primary"
@@ -69,7 +77,7 @@
 
 <script>
 import CodeMirror from '../../components/CodeMirror.vue';
-import { createInterface, getProjectList } from '../../apis';
+import { createInterface, getProjectList, getMockDetail } from '../../apis';
 import { ElMessage } from 'element-plus';
 
 export default {
@@ -84,16 +92,28 @@ export default {
     }
   },
   mounted() {
+    const { query: { mockId } } = this.$route;
+    if (mockId) {
+      this.getMockDetail(mockId);
+    }
+
     this.getProjectList();
   },
   methods: {
     goBack() {
-      this.$router.back()
+      this.$router.back();
     },
     getProjectList() {
       getProjectList().then((res) => {
         if (res.success) {
-          this.projectList = res.data
+          this.projectList = res.data;
+        }
+      })
+    },
+    getMockDetail(id) {
+      getMockDetail(id).then((res) => {
+        if (res.success) {
+          this.form = res.data;
         }
       })
     },

@@ -1,7 +1,6 @@
 'use strict'
 
-// const Mock = require('mockjs')
-// const pathToRegexp = require('path-to-regexp')
+const Mock = require('mockjs')
 
 const moment = require('moment');
 const { MockProxy } = require('../proxy')
@@ -75,14 +74,42 @@ module.exports = class MockController {
    * @param {*} ctx
    */
   static async getMockAPI (ctx) {
+    const { projectId, mockURL } = ctx.pathNode;
+    const { success, message, results } = await MockProxy.findOne(mockURL, projectId);
+
+    if (!success) {
+      ctx.body = ctx.util.refail(message);
+      return;
+    }
+
+    if (results[0]) {
+      const mockData = Mock.mock(JSON.parse(results[0].response));
+      ctx.body = ctx.util.resuccess(mockData);
+      return;
+    }
+
+    ctx.body = ctx.util.refail(message)
   }
 
   /**
    * 获取接口数据
    * @param Object ctx
    */
-  static async getAPIByProjectIds (ctx) {
-    ctx.body = ctx.util.resuccess()
+  static async detail (ctx) {
+    const mockId = ctx.params.mockId;
+    const { success, message, results } = await MockProxy.getById(mockId);
+
+    if (!success) {
+      ctx.body = ctx.util.refail(message);
+      return;
+    }
+
+    if (success && results[0]) {
+      ctx.body = ctx.util.resuccess(results[0]);
+      return;
+    }
+
+    ctx.body = ctx.util.resuccess();
   }
 
   /**

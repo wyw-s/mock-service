@@ -55,6 +55,27 @@ module.exports = class ProjectController {
   }
 
   /**
+   * 根据项目Id获取项目详情
+   * @param Object ctx
+   */
+  static async detail (ctx) {
+    const projectId = ctx.params.projectId;
+    const { success, message, results } = await ProjectProxy.findOne('', projectId);
+
+    if (!success) {
+      ctx.body = ctx.util.refail(message);
+      return;
+    }
+
+    if (success && results[0]) {
+      ctx.body = ctx.util.resuccess(results[0]);
+      return;
+    }
+
+    ctx.body = ctx.util.resuccess();
+  }
+
+  /**
    * 更新项目
    * @param Object ctx
    */

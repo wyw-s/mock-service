@@ -1,19 +1,22 @@
 const Router = require('@koa/router');
 const { mock, project } = require('../controller')
-// const mockRouter = new Router({ prefix: '/mock' });
+const middleware = require('../middlewares');
 const apiRouter = new Router({ prefix: '/api' });
+const mockRouter = new Router({ prefix: '/8mock' });
 
-// exports.mock = mockRouter
-//   .all('*', middleware.mockFilter, rate, restc, mock.getMockAPI)
+exports.mock = mockRouter
+  .get('/(.*)', middleware.mockFilter, mock.getMockAPI)
 
 exports.api = apiRouter
   .get('/project', project.list)
   .post('/project/create', project.create)
-  // .post('/project/update', project.update)
+  .get('/project/detail/:projectId', project.detail)
+  // .post('/project/update/:projectId', project.update)
   // .post('/project/delete', project.delete)
 
   .get('/mock', mock.list)
   .post('/mock/create', mock.create)
+  .get('/mock/detail/:mockId', mock.detail)
   // .post('/mock/update', mock.update)
   // .post('/mock/delete', mock.delete)
 // module.exports = {

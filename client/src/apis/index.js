@@ -3,7 +3,7 @@ import http from './http';
 // 获取项目列表
 export function getProjectList (data) {
   return http({
-    url: '/project',
+    url: '/api/project',
     method: 'get',
     data
   })
@@ -12,16 +12,24 @@ export function getProjectList (data) {
 // 创建项目
 export function createProject (data) {
   return http({
-    url: '/project/create',
+    url: '/api/project/create',
     method: 'post',
     data
+  })
+}
+
+// 获取项目详情
+export function getProjectDetail (projectId) {
+  return http({
+    url: `/api/project/detail/${projectId}`,
+    method: 'post',
   })
 }
 
 // 获取接口列表
 export function getInterface (data) {
   return http({
-    url: '/mock',
+    url: '/api/mock',
     method: 'get',
     data
   })
@@ -30,8 +38,16 @@ export function getInterface (data) {
 // 创建接口
 export function createInterface (data) {
   return http({
-    url: '/mock/create',
+    url: '/api/mock/create',
     method: 'post',
     data
+  })
+}
+
+// 获取接口详情
+export function getMockDetail (mockId) {
+  return http({
+    url: `/api/mock/detail/${mockId}`,
+    method: 'get',
   })
 }

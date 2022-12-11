@@ -15,8 +15,8 @@ module.exports = class ProjectProxy {
     return Project("INSERT INTO project_list set ?", params)
   }
 
-  static findOne (name) {
-    return Project('select * from project_list where project_name = ?', name);
+  static findOne (name, id) {
+    return Project('select * from project_list where project_name = ? OR Id = ?', [name, id]);
   }
 
   static find () {

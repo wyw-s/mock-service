@@ -1,5 +1,7 @@
 'use strict'
 
+const { pathToRegexp } = require('path-to-regexp')
+
 const codeMap = {
   '10000': 'fail',
   '200': 'success',
@@ -29,6 +31,20 @@ const utilFn = {
 module.exports = class Middleware {
   static util (ctx, next) {
     ctx.util = utilFn
+    return next()
+  }
+
+  static mockFilter (ctx, next) {
+
+    const pathNode = pathToRegexp('/8mock/:projectId/:mockURL*').exec(ctx.path)
+
+    if (!pathNode) ctx.throw(404);
+
+    ctx.pathNode = {
+      projectId: pathNode[1],
+      mockURL: '/' + (pathNode[2] || '')
+    }
+
     return next()
   }
 }

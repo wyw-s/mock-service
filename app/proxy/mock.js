@@ -8,7 +8,19 @@ module.exports = class MockProxy {
   }
 
   static getById (mockId) {
-    return Mock(mockId);
+    const sql = `
+      SELECT
+        Id AS id,
+        name,
+        url,
+        method,
+        body,
+        response,
+        project_id AS projectId,
+        remark
+      FROM mock_list where Id = ?
+      `;
+    return Mock(sql, mockId);
   }
 
   static find () {
@@ -17,6 +29,8 @@ module.exports = class MockProxy {
         Id AS id,
         name,
         url,
+        response,
+        project_id AS projectId,
         create_time AS createTime,
         remark
       FROM mock_list

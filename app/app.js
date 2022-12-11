@@ -18,8 +18,7 @@ app.use(logger((str) => {
 // Object.keys(routers).forEach(key => {
 //     app.use(routers[key].routes()).use(routers[key].allowedMethods());
 // });
-app.use(routers.api.routes())
-app.use(routers.api.allowedMethods())
-// app.use(routers.routes()).use(routers.allowedMethods());
+app.use(routers.mock.routes()).use(routers.mock.allowedMethods());
+app.use(routers.api.routes()).use(routers.api.allowedMethods());
 
 module.exports = app;

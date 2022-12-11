@@ -17,6 +17,7 @@
   <el-table
     :data="interfaceList"
     max-height="500"
+    row-key="id"
   >
     <el-table-column
       prop="id"
@@ -41,10 +42,26 @@
       prop="remark"
       label="备注"
     />
+    <el-table-column
+      prop="opt"
+      label="操作"
+    >
+      <template #default="scope">
+        <el-space>
+          <el-link type="primary" @click="onlineTest(scope.row)">
+            预览
+          </el-link>
+          <el-link type="primary" @click="onModify(scope.row)">
+            修改
+          </el-link>
+        </el-space>
+      </template>
+    </el-table-column>
   </el-table>
 </template>
 
 <script>
+import http from '../../apis/http';
 import { getInterface } from '../../apis';
 
 export default {
@@ -67,6 +84,21 @@ export default {
 
     onAdd() {
       this.$router.push('/interface/add')
+    },
+
+    onlineTest(row) {
+      http.get(`/8mock/${row.projectId}${row.url}`).then(res => {
+
+      })
+    },
+
+    onModify(row) {
+      this.$router.push({
+        path: '/interface/add',
+        query: {
+          mockId: row.id
+        }
+      })
     }
   }
 }
