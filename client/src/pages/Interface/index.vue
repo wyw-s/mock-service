@@ -58,17 +58,37 @@
       </template>
     </el-table-column>
   </el-table>
+  <el-drawer size="50%" v-model="drawer" :with-header="false">
+    <el-card shadow="always" style="margin-bottom: 16px">
+      <el-descriptions column="2">
+        <el-descriptions-item label="接口名称：">{{ row.name }}</el-descriptions-item>
+        <el-descriptions-item label="项目名称：">{{ row.projectName }}</el-descriptions-item>
+        <el-descriptions-item label="URL：" span="2">{{ row.url }}</el-descriptions-item>
+        <el-descriptions-item label="环境地址：" span="2">{{ row.envUrl }}</el-descriptions-item>
+      </el-descriptions>
+    </el-card>
+    <div style="height: calc(100% - 160px)">
+      <CodeMirror v-model="code" />
+    </div>
+  </el-drawer>
 </template>
 
 <script>
+import CodeMirror from '../../components/CodeMirror.vue';
 import http from '../../apis/http';
 import { getInterface } from '../../apis';
 
 export default {
   name: 'InterfaceList',
+  components: {
+    CodeMirror
+  },
   data() {
     return {
-      interfaceList: []
+      interfaceList: [],
+      drawer: false,
+      code: '',
+      row: {}
     }
   },
   mounted() {
@@ -87,8 +107,15 @@ export default {
     },
 
     onlineTest(row) {
+      this.drawer = true;
+      this.row = {
+        ...row,
+        envUrl: `${window.location.origin}/8mock/${row.projectId}`
+      };
       http.get(`/8mock/${row.projectId}${row.url}`).then(res => {
-
+        if (res.success) {
+          this.code = JSON.stringify(res.data, null, 2);
+        }
       })
     },
 
@@ -103,3 +130,9 @@ export default {
   }
 }
 </script>
+
+<style lang="less">
+.el-drawer__body {
+  padding: 10px;
+}
+</style>

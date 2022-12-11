@@ -53,7 +53,9 @@
         />
       </el-form-item>
       <el-form-item label="响应体">
-        <CodeMirror v-model="form.response" />
+        <div style="height: 400px">
+          <CodeMirror v-model="form.response" />
+        </div>
       </el-form-item>
       <el-form-item label="备注">
         <el-input
@@ -82,9 +84,9 @@ import { ElMessage } from 'element-plus';
 
 export default {
   name: 'InterfaceName',
-    components: {
-      CodeMirror
-    },
+  components: {
+    CodeMirror
+  },
   data() {
     return {
       form: {},
