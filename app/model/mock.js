@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS mock_list(
   url VARCHAR(255),
   method VARCHAR(255),
   body VARCHAR(255),
-  response VARCHAR(255),
+  response VARCHAR(2000),
   project_id VARCHAR(64),
   create_time VARCHAR(32),
   remark VARCHAR(255)

@@ -5,7 +5,7 @@ const apiRouter = new Router({ prefix: '/api' });
 const mockRouter = new Router({ prefix: '/8mock' });
 
 exports.mock = mockRouter
-  .get('/(.*)', middleware.mockFilter, mock.getMockAPI)
+  .all('/(.*)', middleware.mockFilter, mock.getMockAPI)
 
 exports.api = apiRouter
   .get('/project', project.list)

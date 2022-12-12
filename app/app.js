@@ -6,6 +6,7 @@ const moment = require('moment');
 const Mock = require('mockjs');
 const serve = require('koa-static');
 const path = require('path');
+const cors = require('@koa/cors');
 const middleware = require('./middlewares');
 const routers = require('./router');
 const app = new Koa();
@@ -17,6 +18,7 @@ app.use(middleware.util);
 app.use(logger((str) => {
   console.log(`[${ chalk.gray(moment().format('YYYY-MM-DD HH:mm:ss')) }]`, str);
 }));
+app.use(cors());
 app.use(routers.mock.routes()).use(routers.mock.allowedMethods());
 app.use(routers.api.routes()).use(routers.api.allowedMethods());
 
