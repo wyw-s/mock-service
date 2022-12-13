@@ -89,7 +89,7 @@
 <script>
 import CodeMirror from '../../components/CodeMirror.vue';
 import http from '../../apis/http';
-import { getInterface, delMockInterface } from '../../apis';
+import { getInterface, delMockInterface, createInterface } from '../../apis';
 import { ElMessage } from 'element-plus';
 
 export default {
@@ -141,14 +141,21 @@ export default {
     },
 
     onCopy(row) {
-      delMockInterface({ id: row.id }).then((res) => {
+      createInterface({
+        projectId: row.projectId,
+        name: row.name,
+        url: `${row.url}/copy-${Math.floor(Math.random() * 100000)}`,
+        response: row.response,
+        remark: row.remark
+      }).then((res) => {
         if (res.success) {
           ElMessage({
-            message: '删除成功',
+            message: '复制成功',
             type: 'success'
           });
+          this.getInterfaceList();
         }
-      })
+      });
     },
 
     onDel(row) {
