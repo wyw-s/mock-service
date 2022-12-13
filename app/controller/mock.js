@@ -3,7 +3,7 @@
 const Mock = require('mockjs')
 
 const moment = require('moment');
-const { MockProxy } = require('../proxy')
+const { MockProxy, ProjectProxy } = require('../proxy')
 
 module.exports = class MockController {
   /**
@@ -21,6 +21,18 @@ module.exports = class MockController {
       remark
     }
 
+    const result = await ProjectProxy.getById(projectId);
+
+    if (!result.success) {
+      ctx.body = ctx.util.refail(result.message);
+      return;
+    }
+
+    if (!result.results.length) {
+      ctx.body = ctx.util.refail(`项目不存在`);
+      return
+    }
+
     const { success, message, results } = await MockProxy.findOne(url, projectId);
 
     if (!success) {
@@ -33,7 +45,10 @@ module.exports = class MockController {
       return
     }
 
-    const { success: suc } = await MockProxy.newAndSave(saveQuery)
+    const { success: suc } = await MockProxy.newAndSave({
+      ...saveQuery,
+      project_name: result.results[0].project_name
+    })
 
     if (suc) {
       ctx.body = ctx.util.resuccess('创建成功');
@@ -62,7 +77,6 @@ module.exports = class MockController {
    * 更新接口
    * @param Object ctx
    */
-
   static async update (ctx) {
     const { mockId } = ctx.params;
     const { name, url, response, projectId, remark } = ctx.request.body;
@@ -75,6 +89,18 @@ module.exports = class MockController {
       remark
     }
 
+    const result = await ProjectProxy.getById(projectId);
+
+    if (!result.success) {
+      ctx.body = ctx.util.refail(result.message);
+      return;
+    }
+
+    if (!result.results.length) {
+      ctx.body = ctx.util.refail(`项目不存在`);
+      return
+    }
+
     const { success, message } = await MockProxy.findOne(url, projectId);
 
     if (!success) {
@@ -82,7 +108,10 @@ module.exports = class MockController {
       return;
     }
 
-    const { success: suc } = await MockProxy.updateById(saveQuery)
+    const { success: suc } = await MockProxy.updateById({
+      ...saveQuery,
+      projectName: result.results[0].project_name
+    })
 
     if (suc) {
       ctx.body = ctx.util.resuccess('修改成功');
@@ -144,7 +173,6 @@ module.exports = class MockController {
    * 删除接口
    * @param Object ctx
    */
-
   static async delete (ctx) {
     const { id } = ctx.request.body;
     const { success, message } = await MockProxy.del(id);

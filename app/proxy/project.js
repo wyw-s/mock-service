@@ -7,8 +7,8 @@ module.exports = class ProjectProxy {
     return Project()
   }
 
-  static getById (uid, projectId) {
-    return Project()
+  static getById (projectId) {
+    return Project('SELECT * FROM project_list WHERE Id = ?', projectId)
   }
 
   static newAndSave (params) {
@@ -16,7 +16,7 @@ module.exports = class ProjectProxy {
   }
 
   static findOne (name, id) {
-    return Project('select * from project_list where project_name = ? OR Id = ?', [name, id]);
+    return Project('SELECT * FROM project_list WHERE project_name = ? OR Id = ?', [name, id]);
   }
 
   static find () {

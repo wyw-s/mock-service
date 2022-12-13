@@ -29,6 +29,7 @@ module.exports = class MockProxy {
         url,
         response,
         project_id AS projectId,
+        project_name AS projectName,
         create_time AS createTime,
         remark
       FROM mock_list
@@ -43,17 +44,18 @@ module.exports = class MockProxy {
   }
 
   static updateById (params = {}) {
-    const { projectId, name, url, response, remark, id } = params;
+    const { projectId, name, url, response, remark, id, projectName } = params;
     const sql = `
       UPDATE mock_list 
         SET project_id = ?, 
         name = ?, 
         url = ?, 
         response = ?, 
-        remark = ? 
+        remark = ?,
+        project_name = ?
       WHERE Id = ?`;
 
-    return Mock(sql, [projectId, name, url, response, remark, id]);
+    return Mock(sql, [projectId, name, url, response, remark, projectName, id]);
   }
 
   static delByIds (mockIds) {
