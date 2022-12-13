@@ -1,5 +1,11 @@
 <template>
-  <el-page-header @back="goBack">
+  <el-page-header title="返回" @back="goBack">
+    <template #content>
+      {{ title }}接口
+    </template>
+    <template #extra>
+      <el-button type="primary" @click="onSubmit">确定</el-button>
+    </template>
     <el-form
       :model="form"
       label-width="120px"
@@ -25,31 +31,6 @@
         <el-input
           v-model="form.url"
           placeholder="请求路径"
-        >
-          <template #prepend>
-            <el-select
-              v-model="form.method"
-              placeholder="请求方法"
-              style="width: 115px"
-            >
-              <el-option
-                label="GET"
-                value="GET"
-              />
-              <el-option
-                label="POST"
-                value="POST"
-              />
-            </el-select>
-          </template>
-        </el-input>
-      </el-form-item>
-      <el-form-item label="请求体">
-        <el-input
-          v-model="form.body"
-          :autosize="{ minRows: 2, maxRows: 4 }"
-          type="textarea"
-          placeholder="Please input"
         />
       </el-form-item>
       <el-form-item label="响应体">
@@ -64,14 +45,6 @@
           type="textarea"
           placeholder="请输入备注"
         />
-      </el-form-item>
-      <el-form-item>
-        <el-button
-          type="primary"
-          @click="onSubmit"
-        >
-          创建
-        </el-button>
       </el-form-item>
     </el-form>
   </el-page-header>
@@ -91,13 +64,15 @@ export default {
     return {
       form: {},
       projectList: [],
-      mockId: ''
+      mockId: '',
+      title: '新增'
     }
   },
   mounted() {
     const { query: { mockId } } = this.$route;
     if (mockId) {
       this.mockId = mockId;
+      this.title = '修改';
       this.getMockDetail(mockId);
     }
 

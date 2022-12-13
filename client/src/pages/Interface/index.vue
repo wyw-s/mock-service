@@ -18,33 +18,40 @@
     :data="interfaceList"
     max-height="500"
     row-key="id"
+    highlight-current-row
   >
-    <el-table-column
-      prop="id"
-      label="id"
-      width="180"
-    />
     <el-table-column
       prop="name"
       label="接口名称"
       width="180"
+      show-overflow-tooltip
     />
     <el-table-column
       prop="url"
       label="URL"
+      show-overflow-tooltip
+    />
+    <el-table-column
+      prop="projectName"
+      label="项目名称"
       width="180"
+      show-overflow-tooltip
     />
     <el-table-column
       prop="createTime"
       label="创建时间"
+      width="180"
     />
     <el-table-column
       prop="remark"
       label="备注"
+      width="220"
+      show-overflow-tooltip
     />
     <el-table-column
       prop="opt"
       label="操作"
+      width="120"
     >
       <template #default="scope">
         <el-space>
@@ -58,7 +65,7 @@
       </template>
     </el-table-column>
   </el-table>
-  <el-drawer size="50%" v-model="drawer" :with-header="false">
+  <el-drawer size="50%" v-model="drawer" :with-header="false" :direction="'ltr'">
     <el-card shadow="always" style="margin-bottom: 16px">
       <el-descriptions column="2">
         <el-descriptions-item label="接口名称：">{{ row.name }}</el-descriptions-item>
