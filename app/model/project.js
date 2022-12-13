@@ -6,7 +6,7 @@ const { errorFn } = require('../utils/util');
 const createProjectTable = `
 CREATE TABLE IF NOT EXISTS project_list(
   Id INT auto_increment PRIMARY KEY,
-  project_name VARCHAR(64),
+  project_name VARCHAR(128),
   create_time VARCHAR(32),
   remark VARCHAR(255)
 )`

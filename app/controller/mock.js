@@ -11,12 +11,10 @@ module.exports = class MockController {
    * @param Object ctx
    */
   static async create (ctx) {
-    const { name, url, method, body, response, projectId, remark } = ctx.request.body;
+    const { name, url, response, projectId, remark } = ctx.request.body;
     const saveQuery = {
       name,
       url,
-      method,
-      body,
       response,
       project_id: projectId,
       create_time: moment().format('YYYY-MM-DD HH:ss:mm'),
@@ -67,13 +65,11 @@ module.exports = class MockController {
 
   static async update (ctx) {
     const { mockId } = ctx.params;
-    const { name, url, method, body, response, projectId, remark } = ctx.request.body;
+    const { name, url, response, projectId, remark } = ctx.request.body;
     const saveQuery = {
       id: Number(mockId),
       name,
       url,
-      method,
-      body,
       response,
       projectId,
       remark

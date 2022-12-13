@@ -6,12 +6,10 @@ const { errorFn } = require('../utils/util');
 const createMockTable = `
 CREATE TABLE IF NOT EXISTS mock_list(
   Id INT auto_increment PRIMARY KEY,
-  name VARCHAR(64),
-  url VARCHAR(255),
-  method VARCHAR(255),
-  body VARCHAR(255),
+  name VARCHAR(128),
+  url VARCHAR(128),
   response VARCHAR(2000),
-  project_id VARCHAR(64),
+  project_id INT(11),
   create_time VARCHAR(32),
   remark VARCHAR(255)
 )`
