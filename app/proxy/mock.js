@@ -60,7 +60,7 @@ module.exports = class MockProxy {
     return Mock()
   }
 
-  static del (query) {
-    return Mock(query)
+  static del (mockId) {
+    return Mock(`DELETE FROM mock_list WHERE Id = ${mockId}`);
   }
 }

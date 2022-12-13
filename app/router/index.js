@@ -18,7 +18,7 @@ exports.api = apiRouter
   .post('/mock/create', mock.create)
   .get('/mock/detail/:mockId', mock.detail)
   .post('/mock/update/:mockId', mock.update)
-  // .post('/mock/delete', mock.delete)
+  .post('/mock/delete', mock.delete)
 // module.exports = {
 //   mockRouter,
 //   apiRouter

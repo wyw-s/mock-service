@@ -51,15 +51,21 @@
     <el-table-column
       prop="opt"
       label="操作"
-      width="120"
+      width="180"
     >
       <template #default="scope">
         <el-space>
           <el-link type="primary" @click="onlineTest(scope.row)">
             预览
           </el-link>
+          <el-link type="primary" @click="onCopy(scope.row)">
+            复制
+          </el-link>
           <el-link type="primary" @click="onModify(scope.row)">
             修改
+          </el-link>
+          <el-link type="danger" @click="onDel(scope.row)">
+            删除
           </el-link>
         </el-space>
       </template>
@@ -83,7 +89,8 @@
 <script>
 import CodeMirror from '../../components/CodeMirror.vue';
 import http from '../../apis/http';
-import { getInterface } from '../../apis';
+import { getInterface, delMockInterface } from '../../apis';
+import { ElMessage } from 'element-plus';
 
 export default {
   name: 'InterfaceList',
@@ -129,6 +136,29 @@ export default {
         path: '/interface/add',
         query: {
           mockId: row.id
+        }
+      })
+    },
+
+    onCopy(row) {
+      delMockInterface({ id: row.id }).then((res) => {
+        if (res.success) {
+          ElMessage({
+            message: '删除成功',
+            type: 'success'
+          });
+        }
+      })
+    },
+
+    onDel(row) {
+      delMockInterface({ id: row.id }).then((res) => {
+        if (res.success) {
+          ElMessage({
+            message: '删除成功',
+            type: 'success'
+          });
+          this.getInterfaceList();
         }
       })
     }

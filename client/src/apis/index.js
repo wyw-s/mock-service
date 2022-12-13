@@ -60,3 +60,12 @@ export function updateMock (mockId, data) {
     data
   })
 }
+
+// 删除接口
+export function delMockInterface (data) {
+  return http({
+    url: `/api/mock/delete`,
+    method: 'post',
+    data
+  })
+}

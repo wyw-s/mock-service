@@ -146,6 +146,14 @@ module.exports = class MockController {
    */
 
   static async delete (ctx) {
-    ctx.body = ctx.util.resuccess()
+    const { id } = ctx.request.body;
+    const { success, message } = await MockProxy.del(id);
+
+    if (!success) {
+      ctx.body = ctx.util.refail(message);
+      return;
+    }
+
+    ctx.body = ctx.util.resuccess('删除成功')
   }
 }
