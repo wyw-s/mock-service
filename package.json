@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test:e2e": "playwright test",
-    "start": "cross-env HOSTNAME=localhost PORT=9000 nodemon ./bin/www"
+    "start": "cross-env HOSTNAME=localhost PORT=9999 nodemon ./bin/www"
   },
   "keywords": [],
   "author": "",
