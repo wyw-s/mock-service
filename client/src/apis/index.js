@@ -30,7 +30,7 @@ export function getProjectDetail (projectId) {
 export function getInterface (data) {
   return http({
     url: '/api/mock',
-    method: 'get',
+    method: 'post',
     data
   })
 }

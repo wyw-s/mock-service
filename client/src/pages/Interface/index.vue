@@ -71,6 +71,18 @@
       </template>
     </el-table-column>
   </el-table>
+  <div class="pagination-block">
+    <el-pagination
+      :current-page="pagination.pageNum"
+      :page-size="pagination.pageSize"
+      :page-sizes="[10, 20, 40, 100]"
+      background="background"
+      layout="total, prev, pager, next, sizes"
+      :total="pagination.total"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
+  </div>
   <el-drawer size="50%" v-model="drawer" :with-header="false" :direction="'ltr'">
     <el-card shadow="always" style="margin-bottom: 16px">
       <el-descriptions column="2">
@@ -102,7 +114,12 @@ export default {
       interfaceList: [],
       drawer: false,
       code: '',
-      row: {}
+      row: {},
+      pagination: {
+        pageNum: 1,
+        pageSize: 10,
+        total: 0
+      }
     }
   },
   mounted() {
@@ -111,8 +128,12 @@ export default {
 
   methods: {
     getInterfaceList() {
-      getInterface().then((res) => {
-        this.interfaceList = res.data;
+      getInterface({
+        pageNum: this.pagination.pageNum,
+        pageSize: this.pagination.pageSize,
+      }).then((res) => {
+        this.pagination.total = res.data.total || 0;
+        this.interfaceList = res.data.list;
       })
     },
 
@@ -168,13 +189,28 @@ export default {
           this.getInterfaceList();
         }
       })
-    }
+    },
+
+    handleSizeChange(val) {
+      this.pagination.pageSize = val;
+      this.getInterfaceList();
+    },
+
+    handleCurrentChange(val) {
+      this.pagination.pageNum = val;
+      this.getInterfaceList();
+    },
   }
 }
 </script>
 
-<style lang="less">
+<style scoped lang="less">
 .el-drawer__body {
   padding: 10px;
+}
+.pagination-block {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: 10px;
 }
 </style>

@@ -14,7 +14,7 @@ exports.api = apiRouter
   // .post('/project/update/:projectId', project.update)
   // .post('/project/delete', project.delete)
 
-  .get('/mock', mock.list)
+  .post('/mock', mock.list)
   .post('/mock/create', mock.create)
   .get('/mock/detail/:mockId', mock.detail)
   .post('/mock/update/:mockId', mock.update)

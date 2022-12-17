@@ -8,7 +8,8 @@ const pool = mysql.createPool({
   database: 'mock_service',
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
+  multipleStatements: true
 });
 
 const connection = function(sql, options) {

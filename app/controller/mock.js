@@ -8,7 +8,7 @@ const { MockProxy, ProjectProxy } = require('../proxy')
 module.exports = class MockController {
   /**
    * 创建接口
-   * @param Object ctx
+   * @param ctx
    */
   static async create (ctx) {
     const { name, url, response, projectId, remark } = ctx.request.body;
@@ -60,13 +60,33 @@ module.exports = class MockController {
 
   /**
    * 获取接口列表
-   * @param Object ctx
+   * @param ctx
    */
   static async list (ctx) {
-    const { success, message, results } = await MockProxy.find();
+    const body = ctx.request.body || {}
+    let pageNum = Number(body.pageNum);
+    let pageSize = Number(body.pageSize);
+    if (isNaN(pageNum) || pageNum <= 0) {
+      pageNum = 1;
+    }
+
+    if (isNaN(pageSize) || pageSize <= 0) {
+      pageSize = 10
+    }
+    const { success, message, results } = await MockProxy.find({
+      pageNum,
+      pageSize
+    });
 
     if (success) {
-      ctx.body = ctx.util.resuccess(results);
+      const data = {
+        list: results[0],
+        pageNum,
+        pageSize,
+        total: results[1][0].total
+      }
+      console.log(results, 'Yahweh')
+      ctx.body = ctx.util.resuccess(data);
       return;
     }
 
@@ -75,7 +95,7 @@ module.exports = class MockController {
 
   /**
    * 更新接口
-   * @param Object ctx
+   * @param ctx
    */
   static async update (ctx) {
     const { mockId } = ctx.params;
@@ -137,8 +157,7 @@ module.exports = class MockController {
     if (results[0]) {
       const response = JSON.parse(results[0].response);
       if (response instanceof Object) {
-        const mockData = Mock.mock(response);
-        ctx.body = mockData;
+        ctx.body = Mock.mock(response);
         return;
       }
       ctx.body = null;
@@ -150,7 +169,7 @@ module.exports = class MockController {
 
   /**
    * 获取接口数据
-   * @param Object ctx
+   * @param ctx
    */
   static async detail (ctx) {
     const mockId = ctx.params.mockId;
@@ -171,7 +190,7 @@ module.exports = class MockController {
 
   /**
    * 删除接口
-   * @param Object ctx
+   * @param ctx
    */
   static async delete (ctx) {
     const { id } = ctx.request.body;
