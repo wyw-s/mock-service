@@ -33,13 +33,14 @@ module.exports = class MockProxy {
         create_time AS createTime,
         remark
       FROM mock_list
+      WHERE name LIKE ?
       ORDER BY Id desc
       LIMIT ?, ?;
       
       SELECT COUNT(*) AS total FROM mock_list;
       `;
 
-    return Mock(sql, [valus.pageNum, valus.pageSize]);
+    return Mock(sql, [`%${valus.name}%`, valus.pageNum, valus.pageSize]);
   }
 
   static findOne (url, projectId) {

@@ -1,9 +1,7 @@
 <template>
   <el-space style="display: flex; justify-content: space-between">
     <el-space>
-      <el-input>
-        新增
-      </el-input>
+      <el-input placeholder="请输入接口名称" v-model="interfaceName" @keyup.enter="onSearch" />
     </el-space>
     <el-space>
       <el-button
@@ -119,7 +117,8 @@ export default {
         pageNum: 1,
         pageSize: 10,
         total: 0
-      }
+      },
+      interfaceName: ''
     }
   },
   mounted() {
@@ -131,6 +130,7 @@ export default {
       getInterface({
         pageNum: this.pagination.pageNum,
         pageSize: this.pagination.pageSize,
+        interfaceName: this.interfaceName
       }).then((res) => {
         this.pagination.total = res.data.total || 0;
         this.interfaceList = res.data.list;
@@ -200,6 +200,10 @@ export default {
       this.pagination.pageNum = val;
       this.getInterfaceList();
     },
+
+    onSearch() {
+      this.getInterfaceList();
+    }
   }
 }
 </script>

@@ -1,16 +1,16 @@
-'use strict'
+'use strict';
 
-const Mock = require('mockjs')
+const Mock = require('mockjs');
 
 const moment = require('moment');
-const { MockProxy, ProjectProxy } = require('../proxy')
+const { MockProxy, ProjectProxy } = require('../proxy');
 
 module.exports = class MockController {
   /**
    * 创建接口
    * @param ctx
    */
-  static async create (ctx) {
+  static async create(ctx) {
     const { name, url, response, projectId, remark } = ctx.request.body;
     const saveQuery = {
       name,
@@ -19,73 +19,73 @@ module.exports = class MockController {
       project_id: projectId,
       create_time: moment().format('YYYY-MM-DD HH:ss:mm'),
       remark
-    }
+    };
 
     const result = await ProjectProxy.getById(projectId);
 
-    if (!result.success) {
+    if(!result.success) {
       ctx.body = ctx.util.refail(result.message);
       return;
     }
 
-    if (!result.results.length) {
+    if(!result.results.length) {
       ctx.body = ctx.util.refail(`项目不存在`);
-      return
+      return;
     }
 
     const { success, message, results } = await MockProxy.findOne(url, projectId);
 
-    if (!success) {
+    if(!success) {
       ctx.body = ctx.util.refail(message);
       return;
     }
 
-    if (results.length) {
-      ctx.body = ctx.util.refail(`接口 ${url} 已存在`);
-      return
+    if(results.length) {
+      ctx.body = ctx.util.refail(`接口 ${ url } 已存在`);
+      return;
     }
 
     const { success: suc } = await MockProxy.newAndSave({
       ...saveQuery,
       project_name: result.results[0].project_name
-    })
+    });
 
-    if (suc) {
+    if(suc) {
       ctx.body = ctx.util.resuccess('创建成功');
       return;
     }
 
-    ctx.body = ctx.util.refail(`接口 ${name} 创建失败`);
+    ctx.body = ctx.util.refail(`接口 ${ name } 创建失败`);
   }
 
   /**
    * 获取接口列表
    * @param ctx
    */
-  static async list (ctx) {
-    const body = ctx.request.body || {}
-    let pageNum = Number(body.pageNum);
+  static async list(ctx) {
+    const body = ctx.request.body || {};
+    let pageNum = Number(body.pageNum) - 1;
     let pageSize = Number(body.pageSize);
-    if (isNaN(pageNum) || pageNum <= 0) {
-      pageNum = 1;
+    if(isNaN(pageNum) || pageNum < 0) {
+      pageNum = 0;
     }
 
-    if (isNaN(pageSize) || pageSize <= 0) {
-      pageSize = 10
+    if(isNaN(pageSize) || pageSize <= 0) {
+      pageSize = 10;
     }
     const { success, message, results } = await MockProxy.find({
       pageNum,
-      pageSize
+      pageSize,
+      name: body.interfaceName
     });
 
-    if (success) {
+    if(success) {
       const data = {
         list: results[0],
         pageNum,
         pageSize,
         total: results[1][0].total
-      }
-      console.log(results, 'Yahweh')
+      };
       ctx.body = ctx.util.resuccess(data);
       return;
     }
@@ -97,7 +97,7 @@ module.exports = class MockController {
    * 更新接口
    * @param ctx
    */
-  static async update (ctx) {
+  static async update(ctx) {
     const { mockId } = ctx.params;
     const { name, url, response, projectId, remark } = ctx.request.body;
     const saveQuery = {
@@ -107,23 +107,23 @@ module.exports = class MockController {
       response,
       projectId,
       remark
-    }
+    };
 
     const result = await ProjectProxy.getById(projectId);
 
-    if (!result.success) {
+    if(!result.success) {
       ctx.body = ctx.util.refail(result.message);
       return;
     }
 
-    if (!result.results.length) {
+    if(!result.results.length) {
       ctx.body = ctx.util.refail(`项目不存在`);
-      return
+      return;
     }
 
     const { success, message } = await MockProxy.findOne(url, projectId);
 
-    if (!success) {
+    if(!success) {
       ctx.body = ctx.util.refail(message);
       return;
     }
@@ -131,32 +131,32 @@ module.exports = class MockController {
     const { success: suc } = await MockProxy.updateById({
       ...saveQuery,
       projectName: result.results[0].project_name
-    })
+    });
 
-    if (suc) {
+    if(suc) {
       ctx.body = ctx.util.resuccess('修改成功');
       return;
     }
 
-    ctx.body = ctx.util.refail(`接口 ${name} 修改失败`);
+    ctx.body = ctx.util.refail(`接口 ${ name } 修改失败`);
   }
 
   /**
    * 获取 Mock 接口
    * @param {*} ctx
    */
-  static async getMockAPI (ctx) {
+  static async getMockAPI(ctx) {
     const { projectId, mockURL } = ctx.pathNode;
     const { success, message, results } = await MockProxy.findOne(mockURL, projectId);
 
-    if (!success) {
+    if(!success) {
       ctx.body = ctx.util.refail(message);
       return;
     }
 
-    if (results[0]) {
+    if(results[0]) {
       const response = JSON.parse(results[0].response);
-      if (response instanceof Object) {
+      if(response instanceof Object) {
         ctx.body = Mock.mock(response);
         return;
       }
@@ -164,23 +164,23 @@ module.exports = class MockController {
       return;
     }
 
-    ctx.body = ctx.util.refail(message)
+    ctx.body = ctx.util.refail(message);
   }
 
   /**
    * 获取接口数据
    * @param ctx
    */
-  static async detail (ctx) {
+  static async detail(ctx) {
     const mockId = ctx.params.mockId;
     const { success, message, results } = await MockProxy.getById(mockId);
 
-    if (!success) {
+    if(!success) {
       ctx.body = ctx.util.refail(message);
       return;
     }
 
-    if (success && results[0]) {
+    if(success && results[0]) {
       ctx.body = ctx.util.resuccess(results[0]);
       return;
     }
@@ -192,15 +192,15 @@ module.exports = class MockController {
    * 删除接口
    * @param ctx
    */
-  static async delete (ctx) {
+  static async delete(ctx) {
     const { id } = ctx.request.body;
     const { success, message } = await MockProxy.del(id);
 
-    if (!success) {
+    if(!success) {
       ctx.body = ctx.util.refail(message);
       return;
     }
 
-    ctx.body = ctx.util.resuccess('删除成功')
+    ctx.body = ctx.util.resuccess('删除成功');
   }
-}
+};
