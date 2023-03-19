@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "test:e2e": "playwright test",
-    "start": "cross-env PORT=9999 nodemon ./bin/www"
+    "start:local": "cross-env CURRENT_ENV=local nodemon ./bin/www",
+    "start:prod": "pm2 ecosystem.config.js"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +23,7 @@
     "axios": "^1.2.0",
     "chalk": "2.4.2",
     "codemirror": "^6.0.1",
+    "dotenv": "^16.0.3",
     "element-plus": "^2.2.26",
     "koa": "^2.13.4",
     "koa-body": "^6.0.1",

@@ -1,3 +1,4 @@
+require('../app/config');
 const Koa = require('koa');
 const { koaBody } = require('koa-body');
 const logger = require('koa-logger');

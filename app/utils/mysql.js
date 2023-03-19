@@ -1,11 +1,13 @@
 const mysql = require('mysql2');
 
+const { MYSQL_PORT, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE } = process.env;
+
 const pool = mysql.createPool({
   host: 'localhost',
-  port: '3306',
-  user: 'root',
-  password: 'Wangyawei@520',
-  database: 'mock_service',
+  port: MYSQL_PORT,
+  user: MYSQL_USER,
+  password: MYSQL_PASSWORD,
+  database: MYSQL_DATABASE,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
